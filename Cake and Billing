@@ -1,0 +1,127 @@
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+public class Solution {
+     public static void main(String[] args) {
+        
+        Cake[] cakes=new Cake[5];
+        
+        Scanner sc = new Scanner(System.in);
+
+        for(int i =0;i<cakes.length;i++)
+        {
+            int cakeId = sc.nextInt();sc.nextLine();
+            String cakeName = sc.nextLine();
+            int pound = sc.nextInt();
+            double priceperpound = sc.nextDouble();
+            boolean b=sc.nextBoolean();
+            cakes[i] = new Cake(cakeId,cakeName,pound,priceperpound,b);
+            
+        }
+
+        
+        
+        
+        System.out.println(generateBill(cakes));
+        
+        Cake[] newArray=getEgglessCake(cakes);
+        for(Cake ck:newArray)
+            if(ck!=null)
+            {
+            System.out.println(ck.getCakeId()+" "+ck.getCakeName());
+            }
+     }
+
+     public static double generateBill(Cake[] c)
+     {
+       int count=0; 
+       double price=0, gst=0;
+       for(Cake p:c)
+       {
+       price=price+(p.getPricePerPound() * p.getPound());
+       if(p.isEggless())
+       {
+           price=price+50;
+       }
+       }
+       gst=0.02*price;
+       price=price+gst;
+       return price;
+     }
+     public static Cake[] getEgglessCake(Cake[] c)
+     {
+       int count=0,index=0;
+       for(Cake k:c){
+       if(k.isEggless())
+       {
+          count++;
+       }
+       }
+       Cake[] eggless=new Cake[count];
+       for(int i=0;i<c.length;i++ )
+       {
+           if(c[i].isEggless())
+
+           {
+               eggless[index]=c[i];
+               index++;
+           }
+       }
+      return eggless;
+
+     }
+}
+ class Cake 
+{
+    int cakeid;
+    String cakeName;
+    int pound;
+    double pricePerPound;
+    boolean eggless;
+    public Cake(int cakeid, String cakeName, int pound, double pricePerPound, boolean eggless) {
+        super();
+        this.cakeid = cakeid;
+        this.cakeName = cakeName;
+        this.pound = pound;
+        this.pricePerPound = pricePerPound;
+        this.eggless = eggless;
+    }
+    public int getCakeId() {
+        return cakeid;
+    }
+    public void setCakeId(int cakeid) {
+        this.cakeid = cakeid;
+    }
+    public String getCakeName() {
+        return cakeName;
+    }
+    public void setCakeName(String cakeName) {
+        this.cakeName = cakeName;
+    }
+    public int getPound() {
+        return pound;
+    }
+    public void setPound(int pound) {
+        this.pound = pound;
+    }
+    public double getPricePerPound() {
+        return pricePerPound;
+    }
+    public void setPricePerPound(double pricePerPound) {
+        this.pricePerPound = pricePerPound;
+    }
+    public boolean isEggless() {
+        return eggless;
+    }
+    public void setEggless(boolean eggless) {
+        this.eggless = eggless;
+    }
+}
+}
+    
+    
+
+
