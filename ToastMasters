@@ -1,0 +1,106 @@
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+public class Solution {
+	public static void main(String args[]) throws Exception {
+		/*
+		 * Enter your code here. Read input from STDIN. Print output to STDOUT
+		 */
+		ToastMasters[] t = new ToastMasters[5];
+		Scanner sc = new Scanner(System.in);
+
+		for (int i = 0; i < t.length; i++) {
+			int id = sc.nextInt();
+			sc.nextLine();
+			String location = sc.nextLine();
+			String type = sc.nextLine();
+			int NoOfEvents = sc.nextInt();
+			int NoOfYears = sc.nextInt();
+			t[i] = new ToastMasters(id, location, type, NoOfEvents, NoOfYears);
+		}
+		sc.nextLine();
+		String loc = sc.nextLine();
+		System.out.println("Total Count of " + loc + " : " + specificLocationCount(t, loc));
+		ToastMasters t1[] = updateType(t);
+		for (int i = 0; i < t1.length; i++)
+			System.out.println(t1[i].getId() + "  " + t1[i].getLocation() + "  " + t1[i].getType());
+	}
+
+	public static int specificLocationCount(ToastMasters[] t, String loc) {
+		// implement the method
+		int c = 0;
+		for (int i = 0; i < t.length; i++) {
+			if (t[i].getNoOfEvents() > 10 && loc.equalsIgnoreCase(t[i].getLocation())) {
+				c++;
+			}
+		}
+		return c;
+	}
+
+	public static ToastMasters[] updateType(ToastMasters[] t)
+        {
+		// implement the method
+		int c = 0, c1 = -1;
+
+		for (int i = 0; i < t.length; i++)
+                {
+			if (t[i].getType().equals("Member") && t[i].getNoOfEvents() > 8 && t[i].getNoOfYears() > 3)
+                        {
+				c++;
+			}
+		}
+		ToastMasters[] t1 = new ToastMasters[c];
+		for (int i = 0; i < t.length; i++) {
+			if (t[i].getType().equals("Member") && t[i].getNoOfEvents() > 8 && t[i].getNoOfYears() > 3) {
+				c1++;
+				t[i].setType("Host");
+				t1[c1] = t[i];
+			}
+		}
+		return t1;
+	}
+}
+
+class ToastMasters {
+	// implement the class
+	private int id;
+	private String location;
+	private String type;
+	private int NoOfEvents;
+	private int NoOfYears;
+
+	public ToastMasters(int id, String loc, String type, int NoOfEvents, int NoOfYears) {
+		this.id = id;
+		this.location = loc;
+		this.type = type;
+		this.NoOfEvents = NoOfEvents;
+		this.NoOfYears = NoOfYears;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public int getNoOfEvents() {
+		return NoOfEvents;
+	}
+
+	public int getNoOfYears() {
+		return NoOfYears;
+	}
+
+	public void setType(String s) {
+		this.type = s;
+	}
+}
