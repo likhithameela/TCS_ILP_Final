@@ -1,0 +1,104 @@
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+public class Solution {
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Product[] products = new Product[5];
+
+		Scanner sc = new Scanner(System.in);
+
+		for (int i = 0; i < 5; i++) {
+			int productId = sc.nextInt();
+			sc.nextLine();
+			String productName = sc.nextLine();
+			int qty = sc.nextInt();
+			int price = sc.nextInt();
+
+			products[i] = new Product(productId, productName, qty, price);
+		}
+
+		int totalCartPrice = calculateTotalCartPrice(products);
+		System.out.println("Total Cart Price : " + totalCartPrice);
+
+		System.out.println("\n");
+
+		Product[] productsWithDescendingPrice = arrangeProductsByPriceDescending(products);
+		System.out.println("---- PRODUCTS WITH DESCENDING PRICE ----");
+		for (Product p : productsWithDescendingPrice) {
+			System.out.println(p.getProductName() + " \t\t: " + p.getPrice());
+		}
+	}
+
+	public static int calculateTotalCartPrice(Product[] products) {
+		int sum = 0;
+		for (int i = 0; i < products.length; i++) {
+			sum = sum + (products[i].getQty() * products[i].getPrice());
+		}
+		return sum;
+	}
+
+	public static Product[] arrangeProductsByPriceDescending(Product[] products) {
+		Product[] p = new Product[5];
+		for (int j = 0; j < products.length - 1; j++) {
+			for (int i = 0; i < products.length - 1; i++) {
+				if ((products[i].getPrice()) < (products[i + 1].getPrice())) {
+					p[i] = products[i];
+					products[i] = products[i + 1];
+					products[i + 1] = p[i];
+				}
+			}
+		}
+		return products;
+	}
+}
+
+class Product {
+	private int productId;
+	private int qty;
+	private String productName;
+	int price;
+
+	public Product(int pId, String pName, int qty, int price) {
+		this.productId = pId;
+		this.productName = pName;
+		this.qty = qty;
+		this.price = price;
+	}
+
+	public int getProductId() {
+		return productId;
+	}
+
+	public String getProductName() {
+		return productName;
+	}
+
+	public int getQty() {
+		return qty;
+	}
+
+	public int getPrice() {
+		return price;
+	}
+
+	public void setProductId(int p) {
+		productId = p;
+	}
+
+	public void setProductName(String p) {
+		productName = p;
+	}
+
+	public void setQty(int p) {
+		qty = p;
+	}
+
+	public void setPrice(int p) {
+		price = p;
+	}
+
+}
